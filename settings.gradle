@@ -1,1 +1,3 @@
-include ':app', ':newsapilib'
+include ':newsapilib'
+
+include 'mcp-runner'

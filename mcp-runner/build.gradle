@@ -1,0 +1,45 @@
+plugins {
+    id 'groovy'
+    id 'org.springframework.boot' version '3.5.3'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.sf.ps'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+compileGroovy {
+    options.release = 21
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.ai:spring-ai-bom:1.0.0'
+    }
+}
+
+dependencies {
+    implementation 'org.apache.groovy:groovy:5.0.4'
+    implementation 'org.springframework.ai:spring-ai-starter-mcp-server'
+    implementation project(':newsapilib')
+    testImplementation platform('org.junit:junit-bom:6.0.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+springBoot {
+    mainClass = 'com.mbr.mcp.McpApp'
+}
+
+test {
+    useJUnitPlatform()
+}

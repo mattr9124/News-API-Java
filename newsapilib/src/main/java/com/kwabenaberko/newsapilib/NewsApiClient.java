@@ -7,18 +7,12 @@ import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
 import com.kwabenaberko.newsapilib.models.response.SourcesResponse;
 import com.kwabenaberko.newsapilib.network.APIClient;
 import com.kwabenaberko.newsapilib.network.APIService;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import retrofit2.Response;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
 
 public class NewsApiClient {
     private String mApiKey;
@@ -32,35 +26,6 @@ public class NewsApiClient {
         query.put("apiKey", apiKey);
     }
 
-    //Callbacks
-    public interface SourcesCallback{
-        void onSuccess(SourcesResponse response);
-        void onFailure(Throwable throwable);
-    }
-
-    public interface ArticlesResponseCallback{
-        void onSuccess(ArticleResponse response);
-        void onFailure(Throwable throwable);
-    }
-
-
-    private Throwable errMsg(String str) {
-        Throwable throwable = null;
-        try {
-            JSONObject obj = new JSONObject(str);
-            throwable = new Throwable(obj.getString("message"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        if (throwable == null){
-            throwable = new Throwable("An error occured");
-        }
-
-
-        return throwable;
-    }
-
     private Map<String, String> createQuery(){
         query = new HashMap<>();
         query.put("apiKey", mApiKey);
@@ -69,7 +34,7 @@ public class NewsApiClient {
 
 
     //Get Sources
-    public void getSources(SourcesRequest sourcesRequest, final SourcesCallback callback){
+    public Response<SourcesResponse> getSources(SourcesRequest sourcesRequest){
         query = createQuery();
         query.put("category", sourcesRequest.getCategory());
         query.put("language", sourcesRequest.getLanguage());
@@ -78,32 +43,15 @@ public class NewsApiClient {
         query.values().removeAll(Collections.singleton(null));
 
 
-        mAPIService.getSources(query)
-                .enqueue(new Callback<SourcesResponse>() {
-                    @Override
-                    public void onResponse(Call<SourcesResponse> call, retrofit2.Response<SourcesResponse> response) {
-                        if (response.code() == HttpURLConnection.HTTP_OK){
-                            callback.onSuccess(response.body());
-                        }
-
-                        else{
-                            try {
-                                callback.onFailure(errMsg(response.errorBody().string()));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<SourcesResponse> call, Throwable throwable) {
-                        callback.onFailure(throwable);
-                    }
-                });
+        try {
+            return mAPIService.getSources(query).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
-    public void getTopHeadlines(TopHeadlinesRequest topHeadlinesRequest, final ArticlesResponseCallback callback){
+    public Response<ArticleResponse> getTopHeadlines(TopHeadlinesRequest topHeadlinesRequest){
 
 
         query = createQuery();
@@ -118,33 +66,15 @@ public class NewsApiClient {
         query.values().removeAll(Collections.singleton(null));
         query.values().removeAll(Collections.singleton("null"));
 
-
-        mAPIService.getTopHeadlines(query)
-                .enqueue(new Callback<ArticleResponse>() {
-                    @Override
-                    public void onResponse(Call<ArticleResponse> call, retrofit2.Response<ArticleResponse> response) {
-                        if (response.code() == HttpURLConnection.HTTP_OK){
-                            callback.onSuccess(response.body());
-                        }
-
-                        else{
-                            try {
-                                callback.onFailure(errMsg(response.errorBody().string()));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ArticleResponse> call, Throwable throwable) {
-                        callback.onFailure(throwable);
-                    }
-                });
+        try {
+            return mAPIService.getTopHeadlines(query).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
-    public void getEverything(EverythingRequest everythingRequest, final ArticlesResponseCallback callback){
+    public Response<ArticleResponse> getEverything(EverythingRequest everythingRequest){
         query = createQuery();
         query.put("q", everythingRequest.getQ());
         query.put("sources", everythingRequest.getSources());
@@ -159,27 +89,10 @@ public class NewsApiClient {
         query.values().removeAll(Collections.singleton(null));
         query.values().removeAll(Collections.singleton("null"));
 
-        mAPIService.getEverything(query)
-                .enqueue(new Callback<ArticleResponse>() {
-                    @Override
-                    public void onResponse(Call<ArticleResponse> call, retrofit2.Response<ArticleResponse> response) {
-                        if (response.code() == HttpURLConnection.HTTP_OK){
-                            callback.onSuccess(response.body());
-                        }
-
-                        else{
-                            try {
-                                callback.onFailure(errMsg(response.errorBody().string()));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ArticleResponse> call, Throwable throwable) {
-                        callback.onFailure(throwable);
-                    }
-                });
+        try {
+            return mAPIService.getEverything(query).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

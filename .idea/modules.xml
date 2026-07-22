@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/News-API-Java.iml" filepath="$PROJECT_DIR$/.idea/modules/News-API-Java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mcp-runner/News-API-Java.mcp-runner.iml" filepath="$PROJECT_DIR$/.idea/modules/mcp-runner/News-API-Java.mcp-runner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/newsapilib/News-API-Java.newsapilib.iml" filepath="$PROJECT_DIR$/.idea/modules/newsapilib/News-API-Java.newsapilib.iml" />
       <module fileurl="file://$PROJECT_DIR$/NewsAPIJava.iml" filepath="$PROJECT_DIR$/NewsAPIJava.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/newsapilib/newsapilib.iml" filepath="$PROJECT_DIR$/newsapilib/newsapilib.iml" />

@@ -8,3 +8,7 @@
 /app
 /captures
 .externalNativeBuild
+/.idea
+/lib
+/mcp-runner/build
+/news-api-mcp.log

@@ -1,5 +1,8 @@
-apply plugin: 'java-library'
-apply plugin: 'com.github.dcendents.android-maven'
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
 group = 'com.github.KwabenBerko'
 
 dependencies {
@@ -9,5 +12,7 @@ dependencies {
     implementation 'org.json:json:20220320'
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
