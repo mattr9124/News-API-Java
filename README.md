@@ -1,3 +1,28 @@
+## Fork details
+I forked the original repo and added an MCP module, I've also change the original implementation to work in synchronous mode rather than async as it is more suitable for this MCP.
+
+You can build the JAR with:
+```shell
+# builds the jar to mcp-runner/build/libs/mcp-runner-0.0.1-SNAPSHOT.jar
+./gradlew :mcp-runner:bootJar
+
+# run with
+java -jar ${path_to_jar}
+```
+Configure MCP server with something like this (Claude Desktop example):
+```json
+"mcpServers": {
+  "newsApi": {
+    "command": "java",
+    "args": [
+      "-jar",
+      "${BASE_PATH}/mcp-runner/build/libs/mcp-runner-0.0.1-SNAPSHOT.jar"
+    ]
+  }
+}
+```
+
+
 ## News-API-Java
 
 **Create an account at [newsapi.org](https://newsapi.org/) to get your API key.**
