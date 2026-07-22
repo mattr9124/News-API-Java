@@ -3,7 +3,7 @@ I forked the original repo and added an MCP module, I've also change the origina
 
 You can build the JAR with:
 ```shell
-# builds the jar to libs/mcp-runner-0.0.1-SNAPSHOT.jar
+# builds the jar to mcp-runner/build/libs/mcp-runner-0.0.1-SNAPSHOT.jar
 ./gradlew :mcp-runner:bootJar
 
 # run with
